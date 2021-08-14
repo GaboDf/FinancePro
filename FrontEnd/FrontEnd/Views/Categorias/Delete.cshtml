@@ -1,0 +1,44 @@
+﻿@model FrontEnd.Models.Categorias
+
+@{
+    ViewData["Title"] = "Eliminar";
+}
+
+
+
+<div class="row">
+    <div class="col-12">
+        <form asp-action="Delete">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <h1>Eliminar</h1>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="alert alert-warning" role="alert">
+                            <i class="dripicons-warning me-2"></i> ¿Está seguro que desea eliminar la categoria <strong>@Html.DisplayFor(model => model.Nombre)</strong>?
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-danger btn-flat btnSend" value="Delete">
+                        <i class="uil uil-trash-alt"></i> Aceptar
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
