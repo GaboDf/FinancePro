@@ -15,6 +15,6 @@ namespace FrontEnd.Models
         public string Idcliente { get; set; }
         public int Idcategoria { get; set; }
 
-        public Categorias Categoria { get; set; }
+        public virtual Categorias Categoria { get; set; }
     }
 }

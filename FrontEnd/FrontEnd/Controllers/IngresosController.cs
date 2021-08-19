@@ -13,27 +13,27 @@ using Newtonsoft.Json;
 
 namespace FrontEnd.Controllers
 {
-    public class GastosController : Controller
+    public class IngresosController : Controller
     {
         string baseurl = "https://financeproapi20210813124632.azurewebsites.net/";
         CategoriasServices service = new CategoriasServices();
-        // GET: Gastos
+        // GET: Ingresos
         public async Task<IActionResult> Index()
         {
-            List<data.Gastos> aux = new List<data.Gastos>();
-            List<data.Gastos> naux = new List<data.Gastos>();
+            List<data.Ingresos> aux = new List<data.Ingresos>();
+            List<data.Ingresos> naux = new List<data.Ingresos>();
             using (var cl = new HttpClient())
             {
                 cl.BaseAddress = new Uri(baseurl);
                 cl.DefaultRequestHeaders.Clear();
                 cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage res = await cl.GetAsync("/api/Gastos/GetGastos");
+                HttpResponseMessage res = await cl.GetAsync("/api/Ingresos/GetIngresos");
 
                 if (res.IsSuccessStatusCode)
                 {
                     var auxres = res.Content.ReadAsStringAsync().Result;
-                    aux = JsonConvert.DeserializeObject<List<data.Gastos>>(auxres);
-                    naux = aux.FindAll(m => m.Idcliente == getUserId());
+                    aux = JsonConvert.DeserializeObject<List<data.Ingresos>>(auxres);
+                    naux = aux.FindAll(m => m.Idusuario == getUserId());
                 }
             }
             return View(naux);
@@ -58,7 +58,7 @@ namespace FrontEnd.Controllers
             return View(orders);
         }
 
-        // GET: Gastos/Create
+        // GET: Ingresos/Create
         public IActionResult Create()
         {
             ViewData["Idcategoria"] = new SelectList(service.GetAll(), "Id", "Nombre");
@@ -66,33 +66,34 @@ namespace FrontEnd.Controllers
             return View();
         }
 
-        // POST: Gastos/Create
+        // POST: Ingresos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Monto,Nombre,Descripcion,Fecha,Idcliente,Idcategoria")] data.Gastos gastos)
+        public async Task<IActionResult> Create([Bind("Monto,Nombre,Descripcion,Fecha,Idusuario,Idcategoria")] data.Ingresos Ingresos)
         {
             if (ModelState.IsValid)
             {
                 using (var cl = new HttpClient())
                 {
-                    data.addGasto request = new data.addGasto{
-                        Monto = gastos.Monto,
-                        Nombre = gastos.Nombre,
-                        Descripcion = gastos.Descripcion,
-                        Fecha = gastos.Fecha,
-                        Idcliente = gastos.Idcliente,
-                        Idcategoria = gastos.Idcategoria
+                    data.addIngreso request = new data.addIngreso
+                    {
+                        Monto = Ingresos.Monto,
+                        Nombre = Ingresos.Nombre,
+                        Descripcion = Ingresos.Descripcion,
+                        Fecha = Ingresos.Fecha,
+                        Idusuario = Ingresos.Idusuario,
+                        Idcategoria = Ingresos.Idcategoria
                     };
-                    
+
                     cl.BaseAddress = new Uri(baseurl);
                     var content = JsonConvert.SerializeObject(request);
-                    
+
                     var buffer = System.Text.Encoding.UTF8.GetBytes(content);
                     var byteContent = new ByteArrayContent(buffer);
                     byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                    var postTask = cl.PostAsync("/api/Gastos/PostGastos", byteContent).Result;
+                    var postTask = cl.PostAsync("/api/Ingresos/PostIngresos", byteContent).Result;
 
                     if (postTask.IsSuccessStatusCode)
                     {
@@ -100,12 +101,12 @@ namespace FrontEnd.Controllers
                     }
                 }
             }
-            ViewData["Idcategoria"] = new SelectList(service.GetAll(), "Id", "Nombre", gastos.Idcategoria);
+            ViewData["Idcategoria"] = new SelectList(service.GetAll(), "Id", "Nombre", Ingresos.Idcategoria);
             ViewData["Idcliente"] = getUserId();
-            return View(gastos);
+            return View(Ingresos);
         }
 
-        // GET: Gastos/Edit/5
+        // GET: Ingresos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -113,23 +114,23 @@ namespace FrontEnd.Controllers
                 return NotFound();
             }
 
-            var gastos = GetById(id);
-            if (gastos == null)
+            var Ingresos = GetById(id);
+            if (Ingresos == null)
             {
                 return NotFound();
             }
-            ViewData["Idcategoria"] = new SelectList(service.GetAll(), "Id", "Nombre", gastos.Idcategoria);
-            return View(gastos);
+            ViewData["Idcategoria"] = new SelectList(service.GetAll(), "Id", "Nombre", Ingresos.Idcategoria);
+            return View(Ingresos);
         }
 
-        // POST: Gastos/Edit/5
+        // POST: Ingresos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Monto,Nombre,Descripcion,Fecha,Idcliente,Idcategoria")] data.Gastos gastos)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Monto,Nombre,Descripcion,Fecha,Idusuario,Idcategoria")] data.Ingresos Ingresos)
         {
-            if (id != gastos.Id)
+            if (id != Ingresos.Id)
             {
                 return NotFound();
             }
@@ -141,11 +142,11 @@ namespace FrontEnd.Controllers
                     using (var cl = new HttpClient())
                     {
                         cl.BaseAddress = new Uri(baseurl);
-                        var content = JsonConvert.SerializeObject(gastos);
+                        var content = JsonConvert.SerializeObject(Ingresos);
                         var buffer = System.Text.Encoding.UTF8.GetBytes(content);
                         var byteContent = new ByteArrayContent(buffer);
                         byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                        var postTask = cl.PutAsync("/api/Gastos/PutGastos/" + id, byteContent).Result;
+                        var postTask = cl.PutAsync("/api/Ingresos/PutIngresos/" + id, byteContent).Result;
 
                         if (postTask.IsSuccessStatusCode)
                         {
@@ -167,8 +168,8 @@ namespace FrontEnd.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Idcategoria"] = new SelectList(service.GetAll(), "Id", "Nombre", gastos.Idcategoria);
-            return View(gastos);
+            ViewData["Idcategoria"] = new SelectList(service.GetAll(), "Id", "Nombre", Ingresos.Idcategoria);
+            return View(Ingresos);
         }
 
         //// GET: Orders/Delete/5
@@ -198,7 +199,7 @@ namespace FrontEnd.Controllers
                 cl.BaseAddress = new Uri(baseurl);
                 cl.DefaultRequestHeaders.Clear();
                 cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage res = await cl.DeleteAsync("/api/Gastos/DeleteGastos/" + id);
+                HttpResponseMessage res = await cl.DeleteAsync("/api/Ingresos/DeleteIngresos/" + id);
 
                 if (res.IsSuccessStatusCode)
                 {
@@ -213,43 +214,25 @@ namespace FrontEnd.Controllers
         {
             return (GetById(id) != null);
         }
-        private data.Gastos GetById(int? id)
+        private data.Ingresos GetById(int? id)
         {
-            data.Gastos aux = new data.Gastos();
+            data.Ingresos aux = new data.Ingresos();
             using (var cl = new HttpClient())
             {
                 cl.BaseAddress = new Uri(baseurl);
                 cl.DefaultRequestHeaders.Clear();
                 cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage res = cl.GetAsync("/api/Gastos/GetGastos/" + id).Result;
+                HttpResponseMessage res = cl.GetAsync("/api/Ingresos/GetIngresos/" + id).Result;
 
                 if (res.IsSuccessStatusCode)
                 {
                     var auxres = res.Content.ReadAsStringAsync().Result;
-                    aux = JsonConvert.DeserializeObject<data.Gastos>(auxres);
+                    aux = JsonConvert.DeserializeObject<data.Ingresos>(auxres);
                 }
             }
             return aux;
         }
-        private List<data.Categorias> getAllCategorias()
-        {
-
-            List<data.Categorias> aux = new List<data.Categorias>();
-            using (var cl = new HttpClient())
-            {
-                cl.BaseAddress = new Uri(baseurl);
-                cl.DefaultRequestHeaders.Clear();
-                cl.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage res = cl.GetAsync("/api/Categorias/GetCategorias").Result;
-
-                if (res.IsSuccessStatusCode)
-                {
-                    var auxres = res.Content.ReadAsStringAsync().Result;
-                    aux = JsonConvert.DeserializeObject<List<data.Categorias>>(auxres);
-                }
-            }
-            return aux;
-        }
+        
 
         private string getUserId()
         {

@@ -8,6 +8,7 @@ namespace FrontEnd.Models
     public class Ingresos
     {
         public int Id { get; set; }
+        public double Monto { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public DateTime? Fecha { get; set; }

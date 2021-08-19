@@ -5,7 +5,7 @@
       "type": "apis.azure"
     },
     "mssql1": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/financepro/databases/financepro",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/financepro/databases/FinanceProSQL",
       "type": "mssql.azure",
       "connectionId": "ConnectionStrings:ConnectionAPI",
       "secretStore": "AzureAppSettings"

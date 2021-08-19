@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FrontEnd.Models.Gastos>
+﻿@model IEnumerable<FrontEnd.Models.Ingresos>
 
 @{
     ViewData["Title"] = "Index";
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table" id="tbGastos">
+                    <table class="table" id="tbIngresos">
                         <thead>
                             <tr>
                                 <th>
@@ -51,27 +51,27 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                            <tr>
-                                <td>
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="text-body">@Html.DisplayFor(modelItem => item.Nombre)</a>
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Descripcion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Categoria.Nombre)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Monto)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Fecha)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="action-icon"><i class="mdi mdi-square-edit-outline"></i> </a>
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="text-body">@Html.DisplayFor(modelItem => item.Nombre)</a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Descripcion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Categoria.Nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Monto)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Fecha)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="action-icon"><i class="mdi mdi-square-edit-outline"></i> </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -89,7 +89,7 @@
 
     <script>
         $(document).ready(function () {
-            $('#tbGastos').DataTable({
+            $('#tbIngresos').DataTable({
                 'language': {
                     url: "~/lib/spanish.txt",
                 }
@@ -97,6 +97,3 @@
         })
     </script>
 }
-
-
-

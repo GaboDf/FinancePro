@@ -23,7 +23,7 @@ namespace DAL.EF
 
             modelBuilder.Entity<Categorias>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).UseIdentityColumn();
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
@@ -34,11 +34,11 @@ namespace DAL.EF
             {
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .ValueGeneratedNever();
+                    .UseIdentityColumn();
 
                 entity.Property(e => e.Descripcion).HasMaxLength(150);
 
-                entity.Property(e => e.Fecha).HasColumnType("datetime");
+                entity.Property(e => e.Fecha).HasColumnType("datetime").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Idcategoria).HasColumnName("IDCategoria");
 
@@ -66,11 +66,12 @@ namespace DAL.EF
 
             modelBuilder.Entity<Ingresos>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id)
+                    .UseIdentityColumn();
 
                 entity.Property(e => e.Descripcion).HasMaxLength(200);
 
-                entity.Property(e => e.Fecha).HasColumnType("datetime");
+                entity.Property(e => e.Fecha).HasColumnType("datetime").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Idcategoria).HasColumnName("IDCategoria");
 
@@ -82,6 +83,9 @@ namespace DAL.EF
                 entity.Property(e => e.Nombre)
                     .IsRequired()
                     .HasMaxLength(50);
+                entity.Property(e => e.Monto)
+                .IsRequired()
+                .HasColumnName("Monto");
 
                 entity.HasOne(d => d.Categoria)
                     .WithMany(p => p.Ingresos)
