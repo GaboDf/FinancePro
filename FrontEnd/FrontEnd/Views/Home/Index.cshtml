@@ -44,6 +44,7 @@
         const dgastos = @Html.Raw(Json.Serialize(ViewData["Gastos"]));
         const dingresos = @Html.Raw(Json.Serialize(ViewData["Ingresos"]));
         const dcurrentgastos = @Html.Raw(Json.Serialize(ViewData["currentGastos"]));
+        console.log(dcurrentgastos)
         const dcategorias = getCategorias(dcurrentgastos);
         const gastos = getDataMonth(dgastos, 1).slice(2, 8);
         const ingresos = getDataMonth(dingresos, 1).slice(2, 8);

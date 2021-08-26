@@ -53,18 +53,18 @@ function getCategorias(jsonarray) {
         let monto = gastos[gasto].monto
 
         switch (idcategoria) {
-            case 0:
+            case 1:
                 data[0] += monto
                 break
-            case 1:
+            case 2:
                 data[1] += monto
                 break
-            case 2:
-                data[2] += monto
             case 3:
+                data[2] += monto
+            case 4:
                 data[3] += monto
                 break
-            case 4:
+            case 5:
                 data[4] += monto
                 break
         }

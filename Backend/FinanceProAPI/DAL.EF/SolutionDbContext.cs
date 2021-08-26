@@ -23,7 +23,7 @@ namespace DAL.EF
 
             modelBuilder.Entity<Categorias>(entity =>
             {
-                entity.Property(e => e.Id).UseIdentityColumn();
+                entity.Property(e => e.Id).UseIdentityColumn(); //Utiliza la columna identidad en vez de requerir un input
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
@@ -34,7 +34,7 @@ namespace DAL.EF
             {
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .UseIdentityColumn();
+                    .UseIdentityColumn(); //Utiliza la columna identidad en vez de requerir un input
 
                 entity.Property(e => e.Descripcion).HasMaxLength(150);
 
