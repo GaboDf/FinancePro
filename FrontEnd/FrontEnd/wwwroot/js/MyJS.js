@@ -44,3 +44,30 @@
     }
     return data
 }
+
+function getCategorias(jsonarray) {
+    const gastos = jsonarray
+    let data = new Array(5).fill(0)
+    for (gasto in gastos) {
+        let idcategoria = gastos[gasto].idcategoria
+        let monto = gastos[gasto].monto
+
+        switch (idcategoria) {
+            case 0:
+                data[0] += monto
+                break
+            case 1:
+                data[1] += monto
+                break
+            case 2:
+                data[2] += monto
+            case 3:
+                data[3] += monto
+                break
+            case 4:
+                data[4] += monto
+                break
+        }
+    }
+    return data
+}

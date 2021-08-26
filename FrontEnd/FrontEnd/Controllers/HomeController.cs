@@ -27,6 +27,7 @@ namespace FrontEnd.Controllers
         public IActionResult Index()
         {
             ViewData["currentGasto"] = getCurrentGasto();
+            ViewData["currentGastos"] = getCurrentGastos();
             ViewData["Gastos"] = getGastos();
             ViewData["Ingresos"] = GetIngresos();
             ViewData["CantCategoria"] = getCurrentCategorias();
@@ -94,6 +95,11 @@ namespace FrontEnd.Controllers
                 }
             }
             return total.ToString();
+        }
+
+        private List<data.Gastos> getCurrentGastos()
+        {
+            return getGastos().FindAll(m => DateTime.Parse(m.Fecha.ToString()).Month == DateTime.Now.Month);
         }
         private int[] getCurrentCategorias()
         {

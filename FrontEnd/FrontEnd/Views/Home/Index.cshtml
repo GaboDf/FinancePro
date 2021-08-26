@@ -36,8 +36,6 @@
 
 @section Scripts
 {
-    <script src="assets/js/vendor.min.js"></script>
-    <script src="assets/js/app.min.js"></script>
 
     <!-- third party js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
@@ -45,9 +43,12 @@
     <script>
         const dgastos = @Html.Raw(Json.Serialize(ViewData["Gastos"]));
         const dingresos = @Html.Raw(Json.Serialize(ViewData["Ingresos"]));
-        const gastos = getDataMonth(dgastos, 1).slice(2, 8)
-        const ingresos = getDataMonth(dingresos, 1).slice(2, 8)
+        const dcurrentgastos = @Html.Raw(Json.Serialize(ViewData["currentGastos"]));
+        const dcategorias = getCategorias(dcurrentgastos);
+        const gastos = getDataMonth(dgastos, 1).slice(2, 8);
+        const ingresos = getDataMonth(dingresos, 1).slice(2, 8);
         const labels = ['Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto']
+        const labels2 = ['Servicios','Alimentación','Transferencias','Compras','Transporte']
         const data =
         {
             labels: labels,
@@ -66,6 +67,14 @@
                 }
             ]
         };
+        const data2 = {
+            labels: labels2,
+            datasets: [{
+                label: "Dataset 1",
+                data: dcategorias,
+                backgroundColor: ["RGB(193, 53, 132)", "RGB(48, 77, 99)", "RGB(242, 208, 150)", "RGB(136, 255, 188)","RGB(52, 194, 173)"],
+            }]
+        }
         const config = {
             type: 'line',
             data: data,
@@ -81,7 +90,26 @@
                 }
             }
         }
+        const config2 = {
+            type: 'doughnut',
+            data: data2,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: false,
+                        text: 'Gastos'
+                    }
+                }
+            },
+        };
         const canva = document.getElementById("example")
+        const canva2 = document.getElementById("radar-chart-example")
         var myChart = new Chart(canva, config)
+        var myChar2 = new Chart(canva2, config2)
     </script>
 }
